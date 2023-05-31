@@ -1,0 +1,16 @@
+body {background-color: aqua;
+margin-top: 20px;
+margin-left: 20px;}
+
+.text {
+display: flex;
+color: blue;}
+
+.knopka {
+margin-top: 15px;}
+   
+h4 {
+margin-top: 20px;}
+
+.form {
+display: block;}
