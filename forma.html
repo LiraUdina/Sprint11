@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="style2.css">
   </head>
   <body>
-    <div id="hidden-element">
-      <h2 class="text">Личный кабинет</h2>
+    <div id="hidden-element" class="active">
+      <div>
+        <h2 class="text">Личный кабинет</h2>
+      </div>
       <div class="okno">
         <input type="text" name="firstname" class="form-label" placeholder="Введите Ваше имя"><br>
         <input type="date" class="form-label">
@@ -37,12 +39,22 @@
         <input type="checkbox" id="scales3" class="form-check-input" name="scales" value="water">
         <label for="scales3" class="form-check-label">Пью воду</label>
       </div>
+
+      <input class="knopka btn btn-primary" id="click-to-hide" type="button" onclick="saveData()" value="Сохранить">
     </div>
-    
-    <input class="knopka btn btn-primary" id="click-to-hide" type="button" onclick="saveData()" value="Сохранить">
-    
-    <div id="savedDataContainer"></div>
-    
+
+    <div id="savedDataContainer" style="display: none;">
+      <h4 class="text">Сохраненные данные:</h4>
+      <h5 class="text">Имя:</h5>
+      <p id="savedFirstName"></p>
+      <h5 class="text">Дата рождения:</h5>
+      <p id="savedDateOfBirth"></p>
+      <h5 class="text">Вкусовые предпочтения:</h5>
+      <p id="savedPreferences"></p>
+      <h5 class="text">Привычки:</h5>
+      <p id="savedHabits"></p>
+    </div>
+
     <script>
       function saveData() {
         let firstName = document.querySelector('input[name="firstname"]').value;
@@ -52,30 +64,28 @@
         let sportsHobby = document.querySelector('input[name="scales"][value="sports"]').checked;
         let smokingHabit = document.querySelector('input[name="scales"][value="smoking"]').checked;
         let waterDrinkingHabit = document.querySelector('input[name="scales"][value="water"]').checked;
-        let savedDataContainer = document.getElementById('savedDataContainer');
-        savedDataContainer.innerHTML = `
-          <h4>Сохраненные данные:</h4>
-          <p>Имя: <span>${firstName}</span></p>
-          <p>Дата рождения: <span>${dateOfBirth}</span></p>
-          <p>Вегетарианец: <span>${vegetarian ? "Да" : "Нет"}</span></p>
-          <p>Мясоед: <span>${meatEater ? "Да" : "Нет"}</span></p>
-          <p>Занимаюсь спортом: <span>${sportsHobby ? "Да" : "Нет"}</span></p>
-          <p>Курю: <span>${smokingHabit ? "Да" : "Нет"}</span></p>
-          <p>Пью воду: <span>${waterDrinkingHabit ? "Да" : "Нет"}</span></p>`;
-        
-        // Show the Edit button after saving the data
-        let editButton = document.getElementById('editButton');
-        editButton.style.display = "block";
+
+        document.getElementById('savedFirstName').textContent = firstName;
+        document.getElementById('savedDateOfBirth').textContent = dateOfBirth;
+        document.getElementById('savedPreferences').textContent = vegetarian ? 'Вегетарианец' : 'Мясоед';
+        let habits = [];
+        if (sportsHobby) habits.push('Занимаюсь спортом');
+        if (smokingHabit) habits.push('Курю');
+        if (waterDrinkingHabit) habits.push('Пью воду');
+        document.getElementById('savedHabits').textContent = habits.join(', ');
+
+        document.getElementById('hidden-element').style.display = 'none';
+        document.getElementById('savedDataContainer').style.display = 'block';
+        document.getElementById('editButton').style.display = 'block';
       }
-      
+
       function editData() {
-        let savedDataContainer = document.getElementById('savedDataContainer');
-        savedDataContainer.innerHTML = '';
-        let editButton = document.getElementById('editButton');
-        editButton.style.display = "none";
+        document.getElementById('hidden-element').style.display = 'block';
+        document.getElementById('savedDataContainer').style.display = 'none';
+        document.getElementById('editButton').style.display = 'none';
       }
     </script>
-    
+
     <div>
       <input id="editButton" class="knopka btn btn-primary" type="button" onclick="editData()" value="Редактировать" style="display: none;">
     </div>
